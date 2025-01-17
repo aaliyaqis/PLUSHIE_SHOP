@@ -45,7 +45,7 @@ public class OrderingFormPopup {
         frame.add(rightPanel, BorderLayout.EAST);
 
         leftPanel.setLayout(new BorderLayout());
-        JLabel titleLabel = new JLabel("CREATE YOUR SPECIAL TASTE!", JLabel.CENTER);
+        JLabel titleLabel = new JLabel("GIVE HOME TO A PLUSHIE TODAY!", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         leftPanel.add(titleLabel, BorderLayout.NORTH);
 
@@ -57,14 +57,14 @@ public class OrderingFormPopup {
         leftPanel.add(contentPanel, BorderLayout.CENTER);
 
         // Set pink background for combo boxes, buttons, and text fields
-        productComboBox = new JComboBox<>(new String[]{"Kirby", "Capybara", "Toro", "Miffy"});
-        sizeComboBox = new JComboBox<>(new String[]{"Mini Little Guy", "Medium Little Guy", "Big Guy"});
+        productComboBox = new JComboBox<>(new String[]{"POU", "CAPYBARA", "TORO", "MIFFY"});
+        sizeComboBox = new JComboBox<>(new String[]{"MINI LITTLE GUY", "MEDIUM LITTLE GUY", "BIG GUY"});
         quantityDropdown = new JComboBox<>();
         for (int i = 1; i <= 10; i++) {
             quantityDropdown.addItem(i); // Add values from 1 to 10
         }
-        calculateButton = new JButton("Calculate Total");
-        proceedButton = new JButton("Proceed :3");
+        calculateButton = new JButton("HIT ME TO ADD UP!");
+        proceedButton = new JButton("PROCEED (>O<) ");
 
         // Set font sizes
         Font largeFont = new Font("Arial", Font.BOLD, 20);  // Larger font for labels
@@ -105,12 +105,12 @@ public class OrderingFormPopup {
         // Bottom Panel for total quantity/price
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setBackground(Color.WHITE); // Set background to white
-        JLabel totalQuantityLabel = new JLabel("Total Quantity:");
+        JLabel totalQuantityLabel = new JLabel("TOTAL QUANTITY:");
         totalQuantityLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         quantityField = new JTextField(5);
         quantityField.setEditable(false);
         quantityField.setText("0");
-        JLabel totalPriceTextLabel = new JLabel("Total Price: $");
+        JLabel totalPriceTextLabel = new JLabel("");
         totalPriceTextLabel.setFont(new Font("Arial", Font.BOLD, 16));
         totalPriceLabel = new JLabel("0.00");
         totalPriceLabel.setFont(new Font("Arial", Font.BOLD, 16));
@@ -138,16 +138,16 @@ public class OrderingFormPopup {
             String selectedProduct = (String) productComboBox.getSelectedItem();
             // Update the product image based on selection
             switch (selectedProduct) {
-                case "Kirby":
-                    productImage.setText("Image: Kirby");
+                case "POU":
+                    productImage.setText("Image: Pou");
                     break;
-                case "Capybara":
+                case "CAPYBARA":
                     productImage.setText("Image: Capybara");
                     break;
-                case "Toro":
+                case "TORO":
                     productImage.setText("Image: Toro");
                     break;
-                case "Miffy":
+                case "MIFFY":
                     productImage.setText("Image: Miffy");
                     break;
             }
@@ -159,29 +159,29 @@ public class OrderingFormPopup {
 
             double sizePrice = 0;
             switch (selectedSize) {
-                case "Mini Little Guy":
+                case "MINI LITTLE GUY":
                     sizePrice = 10;
                     break;
-                case "Medium Little Guy":
+                case "MEDIUM LITTLE GUY":
                     sizePrice = 15;
                     break;
-                case "Big Guy":
+                case "BIG GUY":
                     sizePrice = 20;
                     break;
             }
 
             double productAddOn = 0;
             switch (selectedProduct) {
-                case "Kirby":
+                case "POU":
                     productAddOn = 2;
                     break;
-                case "Capybara":
+                case "CAPYBARA":
                     productAddOn = 4;
                     break;
-                case "Toro":
+                case "TORO":
                     productAddOn = 3;
                     break;
-                case "Miffy":
+                case "MIFFY":
                     productAddOn = 5;
                     break;
             }
@@ -192,7 +192,7 @@ public class OrderingFormPopup {
 
             orderedItems.add(new String[]{selectedProduct, selectedSize, String.valueOf(selectedQuantity), String.format("%.2f", sizePrice + productAddOn)});
 
-            totalPriceLabel.setText(String.format("Total Price: $%.2f", totalPrice));
+            totalPriceLabel.setText(String.format("TOTAL PRICE: RM%.2f", totalPrice));
             quantityField.setText(String.valueOf(totalQuantity));
         });
 

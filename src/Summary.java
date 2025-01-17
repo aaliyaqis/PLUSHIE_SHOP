@@ -33,7 +33,7 @@ public class Summary {
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
         headerPanel.add(titleLabel);
 
-        JLabel orderLabel = new JLabel("ORDER #" + String.format("%04d", 1) + " FOR SYNX", JLabel.CENTER);
+        JLabel orderLabel = new JLabel("ORDER #" + String.format("%04d", 1) + " FOR YOU", JLabel.CENTER);
         orderLabel.setFont(new Font("Arial", Font.PLAIN, 18));
         orderLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
         headerPanel.add(orderLabel);
@@ -86,7 +86,7 @@ public class Summary {
         itemCountLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         summaryPanel.add(itemCountLabel);
 
-        JLabel totalLabel = new JLabel("TOTAL: $" + String.format("%.2f", totalPrice), JLabel.CENTER);
+        JLabel totalLabel = new JLabel("TOTAL: RM" + String.format("%.2f", totalPrice), JLabel.CENTER);
         totalLabel.setFont(new Font("Arial", Font.BOLD, 20));
         totalLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         summaryPanel.add(totalLabel);
@@ -94,7 +94,7 @@ public class Summary {
         summaryPanel.add(Box.createVerticalStrut(10)); // Space between summary and footer
         summaryPanel.add(new JSeparator());
 
-        JLabel thankYouLabel = new JLabel("THANK YOU FOR VISITING!", JLabel.CENTER);
+        JLabel thankYouLabel = new JLabel("THANK YOU FOR VISITING! SEE YOU! (>0<)", JLabel.CENTER);
         thankYouLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         thankYouLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         summaryPanel.add(thankYouLabel);
@@ -125,7 +125,7 @@ public class Summary {
         saveButton.addActionListener(e -> {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("receipt.txt"))) {
                 writer.write("RECEIPTIFY\n");
-                writer.write("ORDER #" + String.format("%04d", 1) + " FOR SYNX\n");
+                writer.write("ORDER #" + String.format("%04d", 1) + " FOR YOU\n");
                 writer.write(currentDate + "\n\n");
                 writer.write(String.format("%-10s %-10s %-10s %-10s%n", "QTY", "ITEM", "SIZE", "AMT"));
                 for (String[] item : orderedItems) {
