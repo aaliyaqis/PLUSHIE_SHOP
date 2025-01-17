@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.print.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -7,20 +8,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class Summary {
+public class Summary implements Printable {
     private JFrame frame;
+    private JPanel printContent; // Panel to render for printing
 
     public void show(List<String[]> orderedItems, int totalQuantity, double totalPrice) {
         frame = new JFrame("☆☆☆☆☆ RECEIPT ☆☆☆☆☆");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(480, 620); // Cropped vertical size
+        frame.setSize(480, 620);
         frame.setLayout(new BorderLayout());
         frame.getContentPane().setBackground(new Color(255, 182, 193));
 
         // Content Panel
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Reduced padding
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         contentPanel.setBackground(new Color(255, 182, 193));
         frame.add(contentPanel, BorderLayout.CENTER);
 
@@ -31,15 +33,15 @@ public class Summary {
 
         JLabel titleLabel = new JLabel("RECEIPTIFY", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerPanel.add(titleLabel);
 
-        // Replacing static order text with dynamic "Order at (live time)"
+        // Dynamic time for the order
         SimpleDateFormat liveTimeFormat = new SimpleDateFormat("hh:mm a");
         String liveTime = liveTimeFormat.format(new Date());
-        JLabel orderLabel = new JLabel("ORDER AT " + liveTime, JLabel.CENTER); // Dynamic live time
+        JLabel orderLabel = new JLabel("ORDER AT " + liveTime, JLabel.CENTER);
         orderLabel.setFont(new Font("Arial", Font.PLAIN, 17));
-        orderLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
+        orderLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerPanel.add(orderLabel);
 
         // Current date
@@ -47,10 +49,10 @@ public class Summary {
         String currentDate = dateFormat.format(new Date());
         JLabel dateLabel = new JLabel(currentDate, JLabel.CENTER);
         dateLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        dateLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
+        dateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerPanel.add(dateLabel);
 
-        headerPanel.add(Box.createVerticalStrut(10)); // Reduced spacing
+        headerPanel.add(Box.createVerticalStrut(10));
         headerPanel.add(new JSeparator());
         contentPanel.add(headerPanel);
 
@@ -59,7 +61,7 @@ public class Summary {
         itemsPanel.setLayout(new BoxLayout(itemsPanel, BoxLayout.Y_AXIS));
         itemsPanel.setBackground(new Color(255, 182, 193));
 
-        JPanel tableHeader = new JPanel(new GridLayout(1, 4, 10, 5)); // Reduced vertical gap
+        JPanel tableHeader = new JPanel(new GridLayout(1, 4, 10, 5));
         tableHeader.setBackground(new Color(255, 182, 193));
         tableHeader.add(new JLabel("QTY", JLabel.CENTER));
         tableHeader.add(new JLabel("ITEM", JLabel.CENTER));
@@ -68,7 +70,7 @@ public class Summary {
         itemsPanel.add(tableHeader);
 
         for (String[] item : orderedItems) {
-            JPanel itemRow = new JPanel(new GridLayout(1, 4, 2, 3)); // Reduced vertical gap
+            JPanel itemRow = new JPanel(new GridLayout(1, 4, 2, 3));
             itemRow.setBackground(new Color(255, 182, 193));
             itemRow.add(new JLabel(item[2], JLabel.CENTER));
             itemRow.add(new JLabel(item[0], JLabel.CENTER));
@@ -77,7 +79,7 @@ public class Summary {
             itemsPanel.add(itemRow);
         }
 
-        itemsPanel.add(Box.createVerticalStrut(5)); // Minimal space before divider
+        itemsPanel.add(Box.createVerticalStrut(5));
         itemsPanel.add(new JSeparator());
         contentPanel.add(itemsPanel);
 
@@ -96,7 +98,7 @@ public class Summary {
         totalLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         summaryPanel.add(totalLabel);
 
-        summaryPanel.add(Box.createVerticalStrut(10)); // Space between summary and footer
+        summaryPanel.add(Box.createVerticalStrut(10));
         summaryPanel.add(new JSeparator());
 
         JLabel thankYouLabel = new JLabel("THANK YOU FOR VISITING! SEE YOU! (>0<)", JLabel.CENTER);
@@ -115,16 +117,22 @@ public class Summary {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(255, 182, 193));
 
+        // Print Button
         JButton printButton = new JButton("Print");
         printButton.setBackground(Color.WHITE);
         printButton.addActionListener(e -> {
-            try {
-                frame.print(frame.getGraphics());
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            PrinterJob printerJob = PrinterJob.getPrinterJob();
+            printerJob.setPrintable(this);
+            if (printerJob.printDialog()) {
+                try {
+                    printerJob.print();
+                } catch (PrinterException ex) {
+                    JOptionPane.showMessageDialog(frame, "Printing error: " + ex.getMessage());
+                }
             }
         });
 
+        // Save Button
         JButton saveButton = new JButton("Save");
         saveButton.setBackground(Color.WHITE);
         saveButton.addActionListener(e -> {
@@ -140,9 +148,8 @@ public class Summary {
                 writer.write("TOTAL: RM" + String.format("%.2f", totalPrice) + "\n");
                 writer.write("THANK YOU FOR VISITING!\n");
                 writer.write("receiptify.plushshop.com\n");
-                JOptionPane.showMessageDialog(frame, "RECEIPT IS SAVED! ");
+                JOptionPane.showMessageDialog(frame, "RECEIPT IS SAVED!");
             } catch (IOException ex) {
-                ex.printStackTrace();
                 JOptionPane.showMessageDialog(frame, "Error saving receipt");
             }
         });
@@ -151,6 +158,21 @@ public class Summary {
         buttonPanel.add(saveButton);
         contentPanel.add(buttonPanel);
 
+        // Assign the entire content to be printed
+        this.printContent = contentPanel;
+
         frame.setVisible(true);
     }
+
+    @Override
+    public int print(Graphics g, PageFormat pageFormat, int pageIndex) {
+        if (pageIndex > 0) {
+            return NO_SUCH_PAGE;
+        }
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+        printContent.printAll(g);
+        return PAGE_EXISTS;
+    }
 }
+
