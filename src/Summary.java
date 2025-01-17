@@ -10,7 +10,7 @@ public class Summary {
     private JFrame frame;
 
     public void show(List<String[]> orderedItems, int totalQuantity, double totalPrice) {
-        frame = new JFrame("Order Receipt");
+        frame = new JFrame("☆☆☆☆☆ RECEIPT ☆☆☆☆☆");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(480, 620); // Cropped vertical size
         frame.setLayout(new BorderLayout());
