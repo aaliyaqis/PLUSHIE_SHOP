@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -7,124 +10,108 @@ public class Summary {
     private JFrame frame;
 
     public void show(List<String[]> orderedItems, int totalQuantity, double totalPrice) {
-        // Set the window size to match the 19:6 aspect ratio
         frame = new JFrame("Order Receipt");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(760, 240);  // Aspect ratio 19:6
+        frame.setSize(480, 620); // Cropped vertical size
         frame.setLayout(new BorderLayout());
-        frame.getContentPane().setBackground(new Color(255, 182, 193)); // Pink background
+        frame.getContentPane().setBackground(new Color(255, 182, 193));
 
-        // Panel to hold the receipt content
+        // Content Panel
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        contentPanel.setBackground(new Color(255, 182, 193)); // Keep content panel background pink
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Reduced padding
+        contentPanel.setBackground(new Color(255, 182, 193));
         frame.add(contentPanel, BorderLayout.CENTER);
 
-        // Add header
+        // Title Section
+        JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
+        headerPanel.setBackground(new Color(255, 182, 193));
+
         JLabel titleLabel = new JLabel("RECEIPTIFY", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
-        titleLabel.setForeground(Color.BLACK);  // Set text color to black
-        contentPanel.add(titleLabel);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
+        headerPanel.add(titleLabel);
 
-        // Order number and date
         JLabel orderLabel = new JLabel("ORDER #" + String.format("%04d", 1) + " FOR SYNX", JLabel.CENTER);
         orderLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-        orderLabel.setForeground(Color.BLACK);  // Set text color to black
-        contentPanel.add(orderLabel);
+        orderLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
+        headerPanel.add(orderLabel);
 
-        // Format current date
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM dd, yyyy");
         String currentDate = dateFormat.format(new java.util.Date());
         JLabel dateLabel = new JLabel(currentDate, JLabel.CENTER);
         dateLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-        dateLabel.setForeground(Color.BLACK);  // Set text color to black
-        contentPanel.add(dateLabel);
+        dateLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
+        headerPanel.add(dateLabel);
 
-        // Add a separator line
-        contentPanel.add(Box.createVerticalStrut(10));
-        JSeparator separator = new JSeparator();
-        contentPanel.add(separator);
+        headerPanel.add(Box.createVerticalStrut(10)); // Reduced spacing
+        headerPanel.add(new JSeparator());
+        contentPanel.add(headerPanel);
 
-        // Add table headers
-        JPanel itemPanel = new JPanel();
-        itemPanel.setLayout(new GridLayout(0, 4, 10, 10));
-        itemPanel.setBackground(new Color(255, 182, 193)); // Pink background for item table
-        itemPanel.add(new JLabel("QTY", JLabel.CENTER));
-        itemPanel.add(new JLabel("ITEM", JLabel.CENTER));
-        itemPanel.add(new JLabel("SIZE", JLabel.CENTER));
-        itemPanel.add(new JLabel("AMT", JLabel.CENTER));
-        contentPanel.add(itemPanel);
+        // Items Section
+        JPanel itemsPanel = new JPanel();
+        itemsPanel.setLayout(new BoxLayout(itemsPanel, BoxLayout.Y_AXIS));
+        itemsPanel.setBackground(new Color(255, 182, 193));
 
-        // Add ordered items dynamically
+        JPanel tableHeader = new JPanel(new GridLayout(1, 4, 10, 5)); // Reduced vertical gap
+        tableHeader.setBackground(new Color(255, 182, 193));
+        tableHeader.add(new JLabel("QTY", JLabel.CENTER));
+        tableHeader.add(new JLabel("ITEM", JLabel.CENTER));
+        tableHeader.add(new JLabel("SIZE", JLabel.CENTER));
+        tableHeader.add(new JLabel("AMT", JLabel.CENTER));
+        itemsPanel.add(tableHeader);
+
         for (String[] item : orderedItems) {
-            JPanel itemRow = new JPanel();
-            itemRow.setLayout(new GridLayout(1, 4, 10, 10));
-            itemRow.setBackground(new Color(255, 182, 193)); // Pink background for each item row
-            itemRow.add(new JLabel(item[2], JLabel.CENTER));  // Quantity
-            itemRow.add(new JLabel(item[0], JLabel.CENTER));  // Product
-            itemRow.add(new JLabel(item[1], JLabel.CENTER));  // Size
-            itemRow.add(new JLabel(item[3], JLabel.CENTER));  // Amount
-            contentPanel.add(itemRow);
+            JPanel itemRow = new JPanel(new GridLayout(1, 4, 10, 5)); // Reduced vertical gap
+            itemRow.setBackground(new Color(255, 182, 193));
+            itemRow.add(new JLabel(item[2], JLabel.CENTER));
+            itemRow.add(new JLabel(item[0], JLabel.CENTER));
+            itemRow.add(new JLabel(item[1], JLabel.CENTER));
+            itemRow.add(new JLabel(item[3], JLabel.CENTER));
+            itemsPanel.add(itemRow);
         }
 
-        // Add a separator line
-        contentPanel.add(Box.createVerticalStrut(10));
-        contentPanel.add(new JSeparator());
+        itemsPanel.add(Box.createVerticalStrut(5)); // Minimal space before divider
+        itemsPanel.add(new JSeparator());
+        contentPanel.add(itemsPanel);
 
-        // Add Item Count
-        JLabel itemCountLabel = new JLabel("ITEM COUNT: " + totalQuantity, JLabel.RIGHT);
+        // Summary Section
+        JPanel summaryPanel = new JPanel();
+        summaryPanel.setLayout(new BoxLayout(summaryPanel, BoxLayout.Y_AXIS));
+        summaryPanel.setBackground(new Color(255, 182, 193));
+
+        JLabel itemCountLabel = new JLabel("ITEM COUNT: " + totalQuantity, JLabel.CENTER);
         itemCountLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-        itemCountLabel.setForeground(Color.BLACK);  // Set text color to black
-        contentPanel.add(itemCountLabel);
+        itemCountLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        summaryPanel.add(itemCountLabel);
 
-        // Add Total
-        JLabel totalLabel = new JLabel("TOTAL: $" + String.format("%.2f", totalPrice), JLabel.RIGHT);
+        JLabel totalLabel = new JLabel("TOTAL: $" + String.format("%.2f", totalPrice), JLabel.CENTER);
         totalLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        totalLabel.setForeground(Color.BLACK);  // Set text color to black
-        contentPanel.add(totalLabel);
+        totalLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        summaryPanel.add(totalLabel);
 
-        // Add Card Number and Auth Code (mock data for now)
-        JLabel cardInfoLabel = new JLabel("CARD #: **** **** **** 2021", JLabel.LEFT);
-        cardInfoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        cardInfoLabel.setForeground(Color.BLACK);  // Set text color to black
-        contentPanel.add(cardInfoLabel);
+        summaryPanel.add(Box.createVerticalStrut(10)); // Space between summary and footer
+        summaryPanel.add(new JSeparator());
 
-        JLabel authCodeLabel = new JLabel("AUTH CODE: 123456", JLabel.LEFT);
-        authCodeLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        authCodeLabel.setForeground(Color.BLACK);  // Set text color to black
-        contentPanel.add(authCodeLabel);
-
-        // Add Cardholder Name (mock data)
-        JLabel cardholderLabel = new JLabel("CARDHOLDER: SYNX", JLabel.LEFT);
-        cardholderLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        cardholderLabel.setForeground(Color.BLACK);  // Set text color to black
-        contentPanel.add(cardholderLabel);
-
-        // Add Thank You message
         JLabel thankYouLabel = new JLabel("THANK YOU FOR VISITING!", JLabel.CENTER);
         thankYouLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        thankYouLabel.setForeground(Color.BLACK);  // Set text color to black
-        contentPanel.add(thankYouLabel);
+        thankYouLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        summaryPanel.add(thankYouLabel);
 
-        // Add a separator line at the bottom
-        contentPanel.add(Box.createVerticalStrut(10));
-        contentPanel.add(new JSeparator());
-
-        // Add the barcode (example)
-        JLabel barcodeLabel = new JLabel("**********", JLabel.CENTER);  // You can replace this with actual barcode if needed
-        barcodeLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        barcodeLabel.setForeground(Color.BLACK);  // Set text color to black
-        contentPanel.add(barcodeLabel);
-
-        // Add the website link
         JLabel websiteLabel = new JLabel("receiptify.plushshop.com", JLabel.CENTER);
         websiteLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        websiteLabel.setForeground(Color.BLACK);  // Set text color to black
-        contentPanel.add(websiteLabel);
+        websiteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        summaryPanel.add(websiteLabel);
 
-        // Add Print Button
+        contentPanel.add(summaryPanel);
+
+        // Buttons Section
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(new Color(255, 182, 193));
+
         JButton printButton = new JButton("Print");
+        printButton.setBackground(Color.WHITE);
         printButton.addActionListener(e -> {
             try {
                 frame.print(frame.getGraphics());
@@ -132,10 +119,37 @@ public class Summary {
                 ex.printStackTrace();
             }
         });
-        contentPanel.add(printButton);
 
-        // Show the frame
+        JButton saveButton = new JButton("Save");
+        saveButton.setBackground(Color.WHITE);
+        saveButton.addActionListener(e -> {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("receipt.txt"))) {
+                writer.write("RECEIPTIFY\n");
+                writer.write("ORDER #" + String.format("%04d", 1) + " FOR SYNX\n");
+                writer.write(currentDate + "\n\n");
+                writer.write(String.format("%-10s %-10s %-10s %-10s%n", "QTY", "ITEM", "SIZE", "AMT"));
+                for (String[] item : orderedItems) {
+                    writer.write(String.format("%-10s %-10s %-10s %-10s%n", item[2], item[0], item[1], item[3]));
+                }
+                writer.write("\nITEM COUNT: " + totalQuantity + "\n");
+                writer.write("TOTAL: $" + String.format("%.2f", totalPrice) + "\n");
+                writer.write("THANK YOU FOR VISITING!\n");
+                writer.write("receiptify.plushshop.com\n");
+                JOptionPane.showMessageDialog(frame, "Receipt saved to receipt.txt");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(frame, "Error saving receipt");
+            }
+        });
+
+        buttonPanel.add(printButton);
+        buttonPanel.add(saveButton);
+        contentPanel.add(buttonPanel);
+
         frame.setVisible(true);
     }
 }
+
+
+
 
