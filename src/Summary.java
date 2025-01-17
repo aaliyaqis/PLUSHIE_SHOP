@@ -137,7 +137,7 @@ public class Summary implements Printable {
         saveButton.setBackground(Color.WHITE);
         saveButton.addActionListener(e -> {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("receipt.txt"))) {
-                writer.write("RECEIPTIFY\n");
+                writer.write("RECEIPTIFY ૮(˶˃ᆺ˂˶)ა\n");
                 writer.write("ORDER AT " + liveTime + "\n");
                 writer.write(currentDate + "\n\n");
                 writer.write(String.format("%-10s %-10s %-10s %-10s%n", "QTY", "ITEM", "SIZE", "AMT"));
