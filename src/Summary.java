@@ -31,7 +31,7 @@ public class Summary implements Printable {
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
         headerPanel.setBackground(new Color(255, 182, 193));
 
-        JLabel titleLabel = new JLabel("RECEIPTIFY ૮(˶˃ᆺ˂˶)ა", JLabel.CENTER);
+        JLabel titleLabel = new JLabel("RECEIPTIFY ^(˶˃O˂˶)^", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerPanel.add(titleLabel);
@@ -137,7 +137,7 @@ public class Summary implements Printable {
         saveButton.setBackground(Color.WHITE);
         saveButton.addActionListener(e -> {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("receipt.txt"))) {
-                writer.write("RECEIPTIFY ૮(˶˃ᆺ˂˶)ა\n");
+                writer.write("RECEIPTIFY (>_<)\n");
                 writer.write("ORDER AT " + liveTime + "\n");
                 writer.write(currentDate + "\n\n");
                 writer.write(String.format("%-10s %-10s %-10s %-10s%n", "QTY", "ITEM", "SIZE", "AMT"));
