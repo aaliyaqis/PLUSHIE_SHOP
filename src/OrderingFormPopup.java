@@ -124,6 +124,20 @@ public class OrderingFormPopup {
         bottomPanel.add(calculateButton);
         leftPanel.add(bottomPanel, BorderLayout.SOUTH);
 
+        // Proceed Button
+        JButton proceedButton = new JButton("Proceed :3");
+        proceedButton.setFont(new Font("Arial", Font.BOLD, 18)); // Big font for Proceed button
+        proceedButton.setBackground(new Color(255, 182, 193)); // Pink background
+        proceedButton.setOpaque(true);
+        proceedButton.setBorderPainted(false);
+        proceedButton.setPreferredSize(new Dimension(150, 30)); // Same size as dropdown boxes
+
+        // Add Proceed button at the bottom of the frame
+        JPanel proceedPanel = new JPanel();
+        proceedPanel.setBackground(Color.WHITE);
+        proceedPanel.add(proceedButton);
+        leftPanel.add(proceedPanel, BorderLayout.SOUTH);
+
         // Right Panel Content (Image)
         rightPanel.setLayout(new BorderLayout());
         productImage = new JLabel("Your Image Here", JLabel.CENTER);
@@ -195,6 +209,13 @@ public class OrderingFormPopup {
 
             double totalPrice = totalQuantity * (sizePrice + productAddOn);
             totalPriceLabel.setText(String.format("%.2f", totalPrice));
+        });
+
+        proceedButton.addActionListener(e -> {
+            // Open Summary window (the new class)
+            Summary summary = new Summary();
+            summary.show();
+            frame.dispose(); // Close the current popup window
         });
 
         // Display Frame
