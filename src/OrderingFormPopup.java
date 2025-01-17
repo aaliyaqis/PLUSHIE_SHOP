@@ -68,7 +68,7 @@ public class OrderingFormPopup {
 
         // Set font sizes
         Font largeFont = new Font("Arial", Font.BOLD, 20);  // Larger font for labels
-        Font dropdownFont = new Font("Arial", Font.PLAIN, 16);  // Smaller font for dropdowns
+        Font dropdownFont = new Font("Arial", Font.PLAIN, 18);  // Smaller font for dropdowns
 
         // Set pink background for combo boxes, buttons, and input fields
         productComboBox.setBackground(Color.PINK);
@@ -105,12 +105,12 @@ public class OrderingFormPopup {
         // Bottom Panel for total quantity/price
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setBackground(Color.WHITE); // Set background to white
-        JLabel totalQuantityLabel = new JLabel("TOTAL QUANTITY:");
+        JLabel totalQuantityLabel = new JLabel("TOTAL QTY:");
         totalQuantityLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         quantityField = new JTextField(5);
         quantityField.setEditable(false);
         quantityField.setText("0");
-        JLabel totalPriceTextLabel = new JLabel("");
+        JLabel totalPriceTextLabel = new JLabel("TOTAL PRICE:");
         totalPriceTextLabel.setFont(new Font("Arial", Font.BOLD, 16));
         totalPriceLabel = new JLabel("0.00");
         totalPriceLabel.setFont(new Font("Arial", Font.BOLD, 16));
@@ -192,7 +192,7 @@ public class OrderingFormPopup {
 
             orderedItems.add(new String[]{selectedProduct, selectedSize, String.valueOf(selectedQuantity), String.format("%.2f", sizePrice + productAddOn)});
 
-            totalPriceLabel.setText(String.format("TOTAL PRICE: RM%.2f", totalPrice));
+            totalPriceLabel.setText(String.format("RM%.2f", totalPrice));
             quantityField.setText(String.valueOf(totalQuantity));
         });
 
