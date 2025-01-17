@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class Summary {
@@ -33,15 +34,19 @@ public class Summary {
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
         headerPanel.add(titleLabel);
 
-        JLabel orderLabel = new JLabel("ORDER #" + String.format("%04d", 1) + " FOR YOU", JLabel.CENTER);
-        orderLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        // Replacing static order text with dynamic "Order at (live time)"
+        SimpleDateFormat liveTimeFormat = new SimpleDateFormat("hh:mm a");
+        String liveTime = liveTimeFormat.format(new Date());
+        JLabel orderLabel = new JLabel("ORDER AT " + liveTime, JLabel.CENTER); // Dynamic live time
+        orderLabel.setFont(new Font("Arial", Font.PLAIN, 17));
         orderLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
         headerPanel.add(orderLabel);
 
+        // Current date
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM dd, yyyy");
-        String currentDate = dateFormat.format(new java.util.Date());
+        String currentDate = dateFormat.format(new Date());
         JLabel dateLabel = new JLabel(currentDate, JLabel.CENTER);
-        dateLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        dateLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         dateLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
         headerPanel.add(dateLabel);
 
@@ -125,17 +130,17 @@ public class Summary {
         saveButton.addActionListener(e -> {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("receipt.txt"))) {
                 writer.write("RECEIPTIFY\n");
-                writer.write("ORDER #" + String.format("%04d", 1) + " FOR YOU\n");
+                writer.write("ORDER AT " + liveTime + "\n");
                 writer.write(currentDate + "\n\n");
-                writer.write(String.format("%-10s %-10s %-10s %-10s%n", "QTY", "ITEM", "SIZE", "\t\t\tAMT"));
+                writer.write(String.format("%-10s %-10s %-10s %-10s%n", "QTY", "ITEM", "SIZE", "AMT"));
                 for (String[] item : orderedItems) {
-                    writer.write(String.format("%-10s %-10s %-10s %-10s%n", item[2], item[0], item[1], "\t" + item[3]));
+                    writer.write(String.format("%-10s %-10s %-10s %-10s%n", item[2], item[0], item[1], item[3]));
                 }
                 writer.write("\nITEM COUNT: " + totalQuantity + "\n");
                 writer.write("TOTAL: RM" + String.format("%.2f", totalPrice) + "\n");
                 writer.write("THANK YOU FOR VISITING!\n");
                 writer.write("receiptify.plushshop.com\n");
-                JOptionPane.showMessageDialog(frame, "CHECK OUT THE RECEIPT IN RECEIPT.TXT!");
+                JOptionPane.showMessageDialog(frame, "RECEIPT IS SAVED! ");
             } catch (IOException ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(frame, "Error saving receipt");
@@ -149,7 +154,3 @@ public class Summary {
         frame.setVisible(true);
     }
 }
-
-
-
-

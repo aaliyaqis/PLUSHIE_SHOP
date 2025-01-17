@@ -58,7 +58,7 @@ public class OrderingFormPopup {
 
         // Set pink background for combo boxes, buttons, and text fields
         productComboBox = new JComboBox<>(new String[]{"POU", "CAPYBARA", "TORO", "MIFFY"});
-        sizeComboBox = new JComboBox<>(new String[]{"MINI LITTLE GUY", "MEDIUM LITTLE GUY", "BIG GUY"});
+        sizeComboBox = new JComboBox<>(new String[]{"MINI LITTLE GUY", "MEDIUM GUY", "BIG GUY"});
         quantityDropdown = new JComboBox<>();
         for (int i = 1; i <= 10; i++) {
             quantityDropdown.addItem(i); // Add values from 1 to 10
@@ -162,7 +162,7 @@ public class OrderingFormPopup {
                 case "MINI LITTLE GUY":
                     sizePrice = 10;
                     break;
-                case "MEDIUM LITTLE GUY":
+                case "MEDIUM GUY":
                     sizePrice = 15;
                     break;
                 case "BIG GUY":
