@@ -63,7 +63,7 @@ public class Summary {
         itemsPanel.add(tableHeader);
 
         for (String[] item : orderedItems) {
-            JPanel itemRow = new JPanel(new GridLayout(1, 4, 10, 5)); // Reduced vertical gap
+            JPanel itemRow = new JPanel(new GridLayout(1, 4, 2, 3)); // Reduced vertical gap
             itemRow.setBackground(new Color(255, 182, 193));
             itemRow.add(new JLabel(item[2], JLabel.CENTER));
             itemRow.add(new JLabel(item[0], JLabel.CENTER));
@@ -127,15 +127,15 @@ public class Summary {
                 writer.write("RECEIPTIFY\n");
                 writer.write("ORDER #" + String.format("%04d", 1) + " FOR YOU\n");
                 writer.write(currentDate + "\n\n");
-                writer.write(String.format("%-10s %-10s %-10s %-10s%n", "QTY", "ITEM", "SIZE", "AMT"));
+                writer.write(String.format("%-10s %-10s %-10s %-10s%n", "QTY", "ITEM", "SIZE", "\t\t\tAMT"));
                 for (String[] item : orderedItems) {
-                    writer.write(String.format("%-10s %-10s %-10s %-10s%n", item[2], item[0], item[1], item[3]));
+                    writer.write(String.format("%-10s %-10s %-10s %-10s%n", item[2], item[0], item[1], "\t" + item[3]));
                 }
                 writer.write("\nITEM COUNT: " + totalQuantity + "\n");
-                writer.write("TOTAL: $" + String.format("%.2f", totalPrice) + "\n");
+                writer.write("TOTAL: RM" + String.format("%.2f", totalPrice) + "\n");
                 writer.write("THANK YOU FOR VISITING!\n");
                 writer.write("receiptify.plushshop.com\n");
-                JOptionPane.showMessageDialog(frame, "Receipt saved to receipt.txt");
+                JOptionPane.showMessageDialog(frame, "CHECK OUT THE RECEIPT IN RECEIPT.TXT!");
             } catch (IOException ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(frame, "Error saving receipt");

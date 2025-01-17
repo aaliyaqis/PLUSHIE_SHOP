@@ -1,12 +1,12 @@
 RECEIPTIFY
-ORDER #0001 FOR SYNX
+ORDER #0001 FOR YOU
 Friday, January 17, 2025
 
-QTY        ITEM       SIZE       AMT       
-3          Capybara   Mini Little Guy 14.00     
-5          Toro       Medium Little Guy 18.00     
+QTY        ITEM       SIZE       			AMT    
+3          POU        MEDIUM LITTLE GUY 	17.00    
+5          CAPYBARA   MINI LITTLE GUY 	14.00    
 
 ITEM COUNT: 8
-TOTAL: $144.00
+TOTAL: RM112.00
 THANK YOU FOR VISITING!
 receiptify.plushshop.com
