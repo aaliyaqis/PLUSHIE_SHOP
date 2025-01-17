@@ -31,7 +31,7 @@ public class Summary implements Printable {
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
         headerPanel.setBackground(new Color(255, 182, 193));
 
-        JLabel titleLabel = new JLabel("RECEIPTIFY", JLabel.CENTER);
+        JLabel titleLabel = new JLabel("RECEIPTIFY ૮(˶˃ᆺ˂˶)ა", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerPanel.add(titleLabel);
