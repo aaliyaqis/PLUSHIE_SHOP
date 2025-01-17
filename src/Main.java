@@ -19,7 +19,10 @@ public class Main extends JFrame {
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS)); // Use BoxLayout for vertical stacking
         leftPanel.setBackground(new Color(255, 182, 193));
 
-    // Create labels
+        // Add left panel
+        add(leftPanel, BorderLayout.WEST);
+
+        // Create labels
         JLabel titleLabel = new JLabel("WELCOME TO", JLabel.CENTER);
         titleLabel.setFont(new Font("Serif", Font.BOLD, 36));
         titleLabel.setBorder(new EmptyBorder(0, 0, 10, 50));
@@ -28,11 +31,11 @@ public class Main extends JFrame {
         titleLabel2.setFont(new Font("Serif", Font.BOLD, 36));
         titleLabel.setBorder(new EmptyBorder(0, 0, 10, 50));
 
-        JLabel descriptionLabel = new JLabel("GET YOUR PLUSH NOW ", JLabel.CENTER);
+        JLabel descriptionLabel = new JLabel("GET YOUR PLUSHIE NOW! ", JLabel.CENTER);
         descriptionLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         descriptionLabel.setBorder(new EmptyBorder(0, 35, 10, 0));
 
-    // Add components with spacer panels, increase space line
+        // Add components with spacer panels, increase space line
         leftPanel.add(titleLabel);
         leftPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Spacer
         leftPanel.add(titleLabel2);
@@ -40,14 +43,14 @@ public class Main extends JFrame {
         leftPanel.add(descriptionLabel);
         leftPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Spacer
 
-    // Create another panel for the button
+        // Create another panel for the button
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); // Center the button
         buttonPanel.setBackground(new Color(255, 182, 193)); // Match the left panel background
 
-    // Create button for order
-        JButton menuButton = new JButton("ORDER NOW");
-        menuButton.setBackground(Color.WHITE);
+        // Create button for order
+        JButton menuButton = new JButton("CLICK TO ORDER");
+        menuButton.setBackground(new Color(255, 125, 158));
         menuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,25 +60,23 @@ public class Main extends JFrame {
             }
         });
 
-    // Add the button to the button panel
+        // Add the button to the button panel
         buttonPanel.add(menuButton);
-
-    // Add the button panel to the left panel
-        leftPanel.add(buttonPanel); // Add the button panel instead of the button directly
+        // Add the button panel to the left panel
+        leftPanel.add(buttonPanel);
 
         // Right Panel (Image placeholder)
         JPanel rightPanel = new JPanel();
         rightPanel.setBackground(Color.WHITE);
+
+        // Add right panel
+        add(rightPanel, BorderLayout.CENTER);
 
         JLabel imageLabel = new JLabel();
         ImageIcon icon = new ImageIcon("PLUSHIE SHOP.png");
         Image scaledImage = icon.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH);
         imageLabel.setIcon(new ImageIcon(scaledImage));
         rightPanel.add(imageLabel);
-
-        // Add panels to the frame
-        add(leftPanel, BorderLayout.WEST);
-        add(rightPanel, BorderLayout.CENTER);
 
         // Show the frame
         setLocationRelativeTo(null); // Center on screen
