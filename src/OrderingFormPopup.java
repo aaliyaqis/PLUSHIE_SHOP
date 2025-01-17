@@ -2,106 +2,109 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderingFormPopup {
-    private JFrame frame;
-    private JLabel productImage; // Label for product images
-    private JTextField quantityField; // TextField for displaying total quantity
-    private JLabel totalPriceLabel; // Label for total price
-    private int totalQuantity = 0; // Tracks total quantity
+    private int orderID; // Store order ID
+    private JLabel productImage;
+    private JTextField quantityField;
+    private JLabel totalPriceLabel;
+    private int totalQuantity = 0;
+    private double totalPrice = 0.0;
+    private List<String[]> orderedItems = new ArrayList<>(); // Store ordered items details
+
+    private JComboBox<String> productComboBox;
+    private JComboBox<String> sizeComboBox;
+    private JComboBox<Integer> quantityDropdown;
+    private JButton calculateButton;
+    private JButton proceedButton;
+
+    // Constructor that accepts the order ID
+    public OrderingFormPopup(int orderID) {
+        this.orderID = orderID; // Set the order ID
+    }
 
     public void show() {
-        // Create a JFrame for the popup window
-        frame = new JFrame("☆☆☆☆☆ ORDERING FORM ☆☆☆☆☆");
+        JFrame frame = new JFrame("☆☆☆☆☆ ORDERING FORM ☆☆☆☆☆");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1200, 800); // Larger window size
+        frame.setSize(1200, 800);
         frame.setLayout(new BorderLayout());
         frame.setResizable(false);
 
-        // Set background color of the content pane to match the pink theme
-        frame.getContentPane().setBackground(new Color(255, 182, 193));
+        // Main Panels (white background for the main frame)
+        JPanel leftPanel = new JPanel();
+        leftPanel.setBackground(Color.WHITE); // Set background to white
+        JPanel rightPanel = new JPanel();
+        rightPanel.setBackground(Color.WHITE); // Right panel with white background
 
-        // Main Panels
-        JPanel leftPanel = new JPanel(); // Left Panel: White
-        leftPanel.setBackground(Color.WHITE);
-
-        JPanel rightPanel = new JPanel(); // Right Panel: Pink
-        rightPanel.setBackground(new Color(255, 182, 193));
-
-        // Proportions for 1/2 and 1/2
         leftPanel.setPreferredSize(new Dimension(frame.getWidth() / 2, frame.getHeight()));
         rightPanel.setPreferredSize(new Dimension(frame.getWidth() / 2, frame.getHeight()));
 
         frame.add(leftPanel, BorderLayout.WEST);
         frame.add(rightPanel, BorderLayout.EAST);
 
-        // Left Panel Content
         leftPanel.setLayout(new BorderLayout());
-
-        // Title
         JLabel titleLabel = new JLabel("CREATE YOUR SPECIAL TASTE!", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         leftPanel.add(titleLabel, BorderLayout.NORTH);
 
-        // Content Panel
+        // Content Panel with white background (main content area)
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new GridLayout(4, 2, 15, 15));
+        contentPanel.setBackground(Color.WHITE); // Set content panel background to white
         contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         leftPanel.add(contentPanel, BorderLayout.CENTER);
 
-        // Restore pink styling for combo boxes
-        UIManager.put("ComboBox.background", new Color(255, 182, 193)); // Set pink background
-        UIManager.put("ComboBox.foreground", Color.BLACK); // Text color for readability
-        UIManager.put("ComboBox.selectionBackground", new Color(255, 140, 160)); // Darker pink for selected item
-        UIManager.put("ComboBox.selectionForeground", Color.WHITE); // White text for selected item
-
-        // Big font for dropdowns
-        Font dropdownFont = new Font("Arial", Font.BOLD, 18);
-
-        // Product Dropdown
-        JLabel productLabel = new JLabel("PRODUCT:", JLabel.RIGHT);
-        productLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        JComboBox<String> productComboBox = new JComboBox<>(new String[]{"Kirby", "Capybara", "Toro", "Miffy"});
-        productComboBox.setFont(dropdownFont);
-        ((JLabel) productComboBox.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER); // Center align
-        contentPanel.add(productLabel);
-        contentPanel.add(productComboBox);
-
-        // Size Dropdown
-        JLabel sizeLabel = new JLabel("SIZE:", JLabel.RIGHT);
-        sizeLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        JComboBox<String> sizeComboBox = new JComboBox<>(new String[]{"Mini Little Guy", "Medium Little Guy", "Big Guy"});
-        sizeComboBox.setFont(dropdownFont);
-        ((JLabel) sizeComboBox.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER); // Center align
-        contentPanel.add(sizeLabel);
-        contentPanel.add(sizeComboBox);
-
-        // Quantity Dropdown
-        JLabel quantityLabel = new JLabel("QUANTITY:", JLabel.RIGHT);
-        quantityLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        JComboBox<Integer> quantityDropdown = new JComboBox<>();
+        // Set pink background for combo boxes, buttons, and text fields
+        productComboBox = new JComboBox<>(new String[]{"Kirby", "Capybara", "Toro", "Miffy"});
+        sizeComboBox = new JComboBox<>(new String[]{"Mini Little Guy", "Medium Little Guy", "Big Guy"});
+        quantityDropdown = new JComboBox<>();
         for (int i = 1; i <= 10; i++) {
             quantityDropdown.addItem(i); // Add values from 1 to 10
         }
+        calculateButton = new JButton("Calculate Total");
+        proceedButton = new JButton("Proceed :3");
+
+        // Set font sizes
+        Font largeFont = new Font("Arial", Font.BOLD, 20);  // Larger font for labels
+        Font dropdownFont = new Font("Arial", Font.PLAIN, 16);  // Smaller font for dropdowns
+
+        // Set pink background for combo boxes, buttons, and input fields
+        productComboBox.setBackground(Color.PINK);
+        sizeComboBox.setBackground(Color.PINK);
+        quantityDropdown.setBackground(Color.PINK);
+        calculateButton.setBackground(Color.PINK);
+        proceedButton.setBackground(Color.PINK);
+
+        productComboBox.setFont(dropdownFont);
+        sizeComboBox.setFont(dropdownFont);
         quantityDropdown.setFont(dropdownFont);
-        ((JLabel) quantityDropdown.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER); // Center align
+        calculateButton.setFont(dropdownFont);
+        proceedButton.setFont(dropdownFont);
+
+        // Larger font for the labels
+        JLabel productLabel = new JLabel("PRODUCT:", JLabel.RIGHT);
+        productLabel.setFont(largeFont);
+        JLabel sizeLabel = new JLabel("SIZE:", JLabel.RIGHT);
+        sizeLabel.setFont(largeFont);
+        JLabel quantityLabel = new JLabel("QUANTITY:", JLabel.RIGHT);
+        quantityLabel.setFont(largeFont);
+
+        // Add components to the content panel
+        contentPanel.add(productLabel);
+        contentPanel.add(productComboBox);
+        contentPanel.add(sizeLabel);
+        contentPanel.add(sizeComboBox);
         contentPanel.add(quantityLabel);
         contentPanel.add(quantityDropdown);
 
-        // Add Button
-        JLabel addLabel = new JLabel("", JLabel.RIGHT); // Empty label for alignment
-        JButton addButton = new JButton("Add");
-        addButton.setFont(new Font("Arial", Font.BOLD, 18)); // Big font for Add button
-        addButton.setBackground(new Color(255, 182, 193)); // Pink background
-        addButton.setOpaque(true);
-        addButton.setBorderPainted(false);
-        addButton.setPreferredSize(new Dimension(150, 30)); // Same size as dropdown boxes
-        contentPanel.add(addLabel);
-        contentPanel.add(addButton);
+        contentPanel.add(new JLabel()); // Empty label to align calculateButton
+        contentPanel.add(calculateButton);
 
-        // Total Quantity and Price Panel
+        // Bottom Panel for total quantity/price
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        bottomPanel.setBackground(Color.WHITE);
+        bottomPanel.setBackground(Color.WHITE); // Set background to white
         JLabel totalQuantityLabel = new JLabel("Total Quantity:");
         totalQuantityLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         quantityField = new JTextField(5);
@@ -111,34 +114,16 @@ public class OrderingFormPopup {
         totalPriceTextLabel.setFont(new Font("Arial", Font.BOLD, 16));
         totalPriceLabel = new JLabel("0.00");
         totalPriceLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        JButton calculateButton = new JButton("Calculate Total");
-        calculateButton.setFont(new Font("Arial", Font.BOLD, 18)); // Big font for Calculate button
-        calculateButton.setBackground(new Color(255, 182, 193));
-        calculateButton.setOpaque(true);
-        calculateButton.setBorderPainted(false);
 
         bottomPanel.add(totalQuantityLabel);
         bottomPanel.add(quantityField);
         bottomPanel.add(totalPriceTextLabel);
         bottomPanel.add(totalPriceLabel);
-        bottomPanel.add(calculateButton);
+        bottomPanel.add(proceedButton);
+
         leftPanel.add(bottomPanel, BorderLayout.SOUTH);
 
-        // Proceed Button
-        JButton proceedButton = new JButton("Proceed :3");
-        proceedButton.setFont(new Font("Arial", Font.BOLD, 18)); // Big font for Proceed button
-        proceedButton.setBackground(new Color(255, 182, 193)); // Pink background
-        proceedButton.setOpaque(true);
-        proceedButton.setBorderPainted(false);
-        proceedButton.setPreferredSize(new Dimension(150, 30)); // Same size as dropdown boxes
-
-        // Add Proceed button at the bottom of the frame
-        JPanel proceedPanel = new JPanel();
-        proceedPanel.setBackground(Color.WHITE);
-        proceedPanel.add(proceedButton);
-        leftPanel.add(proceedPanel, BorderLayout.SOUTH);
-
-        // Right Panel Content (Image)
+        // Right Panel (Image placeholder)
         rightPanel.setLayout(new BorderLayout());
         productImage = new JLabel("Your Image Here", JLabel.CENTER);
         productImage.setFont(new Font("Arial", Font.ITALIC, 16));
@@ -148,30 +133,24 @@ public class OrderingFormPopup {
         productImage.setOpaque(true);
         rightPanel.add(productImage, BorderLayout.CENTER);
 
-        // Add Listeners
+        // Add Action Listeners for comboBox selection and button presses
         productComboBox.addActionListener(e -> {
             String selectedProduct = (String) productComboBox.getSelectedItem();
             // Update the product image based on selection
             switch (selectedProduct) {
                 case "Kirby":
-                    productImage.setText("Image: Kirby"); // Replace with Kirby image
+                    productImage.setText("Image: Kirby");
                     break;
                 case "Capybara":
-                    productImage.setText("Image: Capybara"); // Replace with Capybara image
+                    productImage.setText("Image: Capybara");
                     break;
                 case "Toro":
-                    productImage.setText("Image: Toro"); // Replace with Toro image
+                    productImage.setText("Image: Toro");
                     break;
                 case "Miffy":
-                    productImage.setText("Image: Miffy"); // Replace with Miffy image
+                    productImage.setText("Image: Miffy");
                     break;
             }
-        });
-
-        addButton.addActionListener(e -> {
-            int selectedQuantity = (int) quantityDropdown.getSelectedItem();
-            totalQuantity += selectedQuantity;
-            quantityField.setText(String.valueOf(totalQuantity));
         });
 
         calculateButton.addActionListener(e -> {
@@ -193,7 +172,7 @@ public class OrderingFormPopup {
 
             double productAddOn = 0;
             switch (selectedProduct) {
-                case "Pou":
+                case "Kirby":
                     productAddOn = 2;
                     break;
                 case "Capybara":
@@ -207,18 +186,24 @@ public class OrderingFormPopup {
                     break;
             }
 
-            double totalPrice = totalQuantity * (sizePrice + productAddOn);
-            totalPriceLabel.setText(String.format("%.2f", totalPrice));
+            int selectedQuantity = (int) quantityDropdown.getSelectedItem();
+            totalQuantity += selectedQuantity;
+            totalPrice = totalQuantity * (sizePrice + productAddOn);
+
+            orderedItems.add(new String[]{selectedProduct, selectedSize, String.valueOf(selectedQuantity), String.format("%.2f", sizePrice + productAddOn)});
+
+            totalPriceLabel.setText(String.format("Total Price: $%.2f", totalPrice));
+            quantityField.setText(String.valueOf(totalQuantity));
         });
 
         proceedButton.addActionListener(e -> {
-            // Open Summary window (the new class)
+            // Open the summary screen and pass the order details
             Summary summary = new Summary();
-            summary.show();
-            frame.dispose(); // Close the current popup window
+            summary.show(orderedItems, totalQuantity, totalPrice);
+            frame.dispose(); // Close the current ordering form
         });
 
-        // Display Frame
+        // Display the frame
         frame.setVisible(true);
     }
 }

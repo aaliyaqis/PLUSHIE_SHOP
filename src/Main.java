@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Main extends JFrame {
+    private static int orderCounter = 1;  // Static counter for unique order IDs
+
     public Main() {
         // Set up the main frame (aka Homepage)
         setTitle("☆☆☆☆☆ PLUSH SHOP HOMEPAGE ☆☆☆☆☆");
@@ -11,7 +13,7 @@ public class Main extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // left panel (pink bg)
+        // Left panel (pink background)
         JPanel leftPanel = new JPanel(new BorderLayout());
         leftPanel.setBackground(Color.PINK);
 
@@ -29,7 +31,8 @@ public class Main extends JFrame {
         menuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                OrderingFormPopup popup = new OrderingFormPopup();
+                OrderingFormPopup popup = new OrderingFormPopup(orderCounter); // Pass orderCounter as argument
+                orderCounter++; // Increment order counter for unique IDs
                 popup.show();
             }
         });
