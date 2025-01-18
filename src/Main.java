@@ -12,7 +12,7 @@ public class Main extends JFrame {
     public Main() {
         // Set up the main frame (aka Homepage)
         setTitle("☆☆☆☆☆ HOMEPAGE ☆☆☆☆☆");
-        setSize(800, 400);
+        setSize(1000, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -39,11 +39,11 @@ public class Main extends JFrame {
 
         // Add components with spacer panels, increase space line
         leftPanel.add(titleLabel);
-        leftPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Spacer
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 30))); // Spacer
         leftPanel.add(titleLabel2);
-        leftPanel.add(Box.createRigidArea(new Dimension(0, 100))); // Spacer
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 180))); // Spacer
         leftPanel.add(descriptionLabel);
-        leftPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Spacer
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 125))); // Spacer
 
         // Create another panel for the button
         JPanel buttonPanel = new JPanel();
