@@ -26,7 +26,7 @@ public class OrderingFormPopup {
     }
 
     public void show() {
-        JFrame frame = new JFrame("☆☆☆☆☆ ORDERING FORM ☆☆☆☆☆");
+        JFrame frame = new JFrame("☆☆☆☆☆☆ ORDERING FORM ☆☆☆☆☆☆");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 800);
         frame.setLayout(new BorderLayout());
