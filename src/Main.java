@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import javax.swing.border.EmptyBorder;
 
 public class Main extends JFrame {
@@ -39,7 +41,7 @@ public class Main extends JFrame {
         leftPanel.add(titleLabel);
         leftPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Spacer
         leftPanel.add(titleLabel2);
-        leftPanel.add(Box.createRigidArea(new Dimension(0, 30))); // Spacer
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 100))); // Spacer
         leftPanel.add(descriptionLabel);
         leftPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Spacer
 
@@ -74,9 +76,22 @@ public class Main extends JFrame {
 
         JLabel imageLabel = new JLabel();
         ImageIcon icon = new ImageIcon("PLUSHIE SHOP.png");
-        Image scaledImage = icon.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH);
-        imageLabel.setIcon(new ImageIcon(scaledImage));
+        Image originalImage = icon.getImage(); //unscaled image
+        imageLabel.setIcon(new ImageIcon(originalImage.getScaledInstance(350, 350, Image.SCALE_SMOOTH)));
         rightPanel.add(imageLabel);
+
+        // Add a resize listener to scale the image dynamically
+        rightPanel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                int panelWidth = rightPanel.getWidth();
+                int panelHeight = rightPanel.getHeight();
+
+                // Scale the image proportionally
+                Image scaledImage = originalImage.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
+                imageLabel.setIcon(new ImageIcon(scaledImage));
+            }
+        });
 
         // Show the frame
         setLocationRelativeTo(null); // Center on screen
