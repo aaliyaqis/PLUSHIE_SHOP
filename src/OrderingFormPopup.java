@@ -178,7 +178,7 @@ public class OrderingFormPopup {
 
         proceedButton.addActionListener(e -> {
             if (orderedItems.isEmpty()) {
-                JOptionPane.showMessageDialog(frame, "Your cart is empty! Add plushies before proceeding.", "Cart Empty", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "Your cart is empty! Add your plushies before proceeding.", "Cart Empty", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
