@@ -1,12 +1,12 @@
 RECEIPTIFY (>_<)
-ORDER AT 07:52 pm
-Friday, January 17, 2025
+ORDER AT 10:24 pm
+Saturday, January 18, 2025
 
 QTY        ITEM       SIZE       AMT       
-5          CAPYBARA   MEDIUM GUY 19.00     
-5          POU        BIG GUY    22.00     
+1          CAPYBARA   MINI LITTLE GUY 14.00     
+2          TORO       BIG GUY    23.00     
 
-ITEM COUNT: 10
-TOTAL: RM220.00
+ITEM COUNT: 3
+TOTAL: RM60.00
 THANK YOU FOR VISITING!
 receiptify.plushshop.com
