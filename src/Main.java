@@ -12,9 +12,10 @@ public class Main extends JFrame {
     public Main() {
         // Set up the main frame (aka Homepage)
         setTitle("☆☆☆☆☆ HOMEPAGE ☆☆☆☆☆");
-        setSize(1000, 800);
+        setSize(1000, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        setResizable(false);
 
         // Left Panel, pink
         JPanel leftPanel = new JPanel();
@@ -24,26 +25,48 @@ public class Main extends JFrame {
         // Add left panel
         add(leftPanel, BorderLayout.WEST);
 
-        // Create labels
+        // Create labels in left panel
         JLabel titleLabel = new JLabel("WELCOME TO", JLabel.CENTER);
-        titleLabel.setFont(new Font("Serif", Font.BOLD, 36));
-        titleLabel.setBorder(new EmptyBorder(0, 0, 10, 50));
+        titleLabel.setFont(new Font("Serif", Font.BOLD, 45));
+        titleLabel.setForeground(new Color(232, 76, 143));
+        titleLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel titleLabel2 = new JLabel("PLUSHIE SHOP ", JLabel.CENTER);
-        titleLabel2.setFont(new Font("Serif", Font.BOLD, 36));
-        titleLabel.setBorder(new EmptyBorder(0, 0, 10, 50));
+        titleLabel2.setFont(new Font("Serif", Font.BOLD, 45));
+        titleLabel2.setForeground(new Color(232, 76, 143));
+        titleLabel2.setBorder(new EmptyBorder(0, 0, 10, 0));
+        titleLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel descriptionLabel = new JLabel("GET YOUR PLUSHIE NOW! ", JLabel.CENTER);
-        descriptionLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        descriptionLabel.setBorder(new EmptyBorder(0, 35, 10, 0));
+        JTextArea descriptionLabel = new JTextArea();
+        descriptionLabel.setText("our shop sell four types\n"
+        + "of ADORABLE and SOFT plushies,\n" + "with guaranteed the best quality.\n\n"
+        + "'SO HUGGABLE, SO LOVEABLE'");
+        descriptionLabel.setFont(new Font("Monospaced", Font.ITALIC, 16));
+        descriptionLabel.setBackground(new Color(255, 182,193));
+        descriptionLabel.setLineWrap(true);
+        descriptionLabel.setWrapStyleWord(true);
+        descriptionLabel.setEditable(false);
+        descriptionLabel.setBorder(new EmptyBorder(0, 10, 10, 10));
+        descriptionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel descriptionLabel2 = new JLabel("GRAB YOURS NOW! ", JLabel.CENTER);
+        descriptionLabel2.setFont(new Font("Lobster", Font.BOLD, 23));
+        descriptionLabel2.setForeground(new Color(232, 76, 143));
+        descriptionLabel2.setBorder(new EmptyBorder(0, 0, 10, 0));
+        descriptionLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Add components with spacer panels, increase space line
         leftPanel.add(titleLabel);
-        leftPanel.add(Box.createRigidArea(new Dimension(0, 30))); // Spacer
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
         leftPanel.add(titleLabel2);
-        leftPanel.add(Box.createRigidArea(new Dimension(0, 180))); // Spacer
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 80)));
+
         leftPanel.add(descriptionLabel);
-        leftPanel.add(Box.createRigidArea(new Dimension(0, 125))); // Spacer
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 90)));
+
+        leftPanel.add(descriptionLabel2);
 
         // Create another panel for the button
         JPanel buttonPanel = new JPanel();
@@ -52,7 +75,10 @@ public class Main extends JFrame {
 
         // Create button for order
         JButton menuButton = new JButton("CLICK TO ORDER");
-        menuButton.setBackground(new Color(255, 125, 158));
+        menuButton.setFont(new Font("Lobster", Font.BOLD, 20));
+        menuButton.setBackground(new Color(232, 76, 143));
+        //menuButton.setForeground(new Color(255, 182, 193));
+        menuButton.setPreferredSize(new Dimension(250, 75));
         menuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,6 +92,7 @@ public class Main extends JFrame {
         buttonPanel.add(menuButton);
         // Add the button panel to the left panel
         leftPanel.add(buttonPanel);
+        leftPanel.add(Box.createRigidArea(new Dimension(0, 30)));
 
         // Right Panel (Image placeholder)
         JPanel rightPanel = new JPanel();
