@@ -127,7 +127,7 @@ public class OrderingFormPopup {
 
         // Right Panel for Product Image
         rightPanel.setLayout(new BorderLayout());
-        productImage = new JLabel("Your Image Here", JLabel.CENTER);
+        productImage = new JLabel("Your Image Here: pricing.png", JLabel.CENTER);
         productImage.setFont(new Font("Arial", Font.ITALIC, 16));
         productImage.setForeground(Color.DARK_GRAY);
         productImage.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
