@@ -50,7 +50,8 @@ public class OrderingFormPopup {
         // Create Components for Left Panel
         leftPanel.setLayout(new BorderLayout());
         JLabel titleLabel = new JLabel("GIVE HOME TO A PLUSHIE TODAY!", JLabel.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setFont(new Font("Serif", Font.BOLD, 24));
+        titleLabel.setForeground(new Color(232,76,143));
         leftPanel.add(titleLabel, BorderLayout.NORTH);
 
         // Content Panel
@@ -90,6 +91,11 @@ public class OrderingFormPopup {
         JLabel productLabel = new JLabel("PRODUCT:", JLabel.RIGHT);
         JLabel sizeLabel = new JLabel("SIZE:", JLabel.RIGHT);
         JLabel quantityLabel = new JLabel("QUANTITY:", JLabel.RIGHT);
+
+        sizeLabel.setForeground(new Color(232,76,143));
+        productLabel.setForeground(new Color(232,76,143));
+        quantityLabel.setForeground(new Color(232,76,143));
+
         productLabel.setFont(largeFont);
         sizeLabel.setFont(largeFont);
         quantityLabel.setFont(largeFont);

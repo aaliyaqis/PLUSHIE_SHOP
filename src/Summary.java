@@ -8,7 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class Summary implements Printable {
+public class
+Summary implements Printable {
     private JFrame frame;
     private JPanel printContent; // Panel to render for printing
 
@@ -32,7 +33,8 @@ public class Summary implements Printable {
         headerPanel.setBackground(new Color(255, 182, 193));
 
         JLabel titleLabel = new JLabel("RECEIPTIFY ^(˶˃O˂˶)^", JLabel.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 36));
+        titleLabel.setFont(new Font("Serif", Font.BOLD, 36));
+        titleLabel.setForeground(new Color(232, 76, 143));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerPanel.add(titleLabel);
 
@@ -119,7 +121,7 @@ public class Summary implements Printable {
 
         // Print Button
         JButton printButton = new JButton("Print");
-        printButton.setBackground(Color.WHITE);
+        printButton.setBackground(new Color(232,76,143));
         printButton.addActionListener(e -> {
             PrinterJob printerJob = PrinterJob.getPrinterJob();
             printerJob.setPrintable(this);
@@ -134,7 +136,7 @@ public class Summary implements Printable {
 
         // Save Button
         JButton saveButton = new JButton("Save");
-        saveButton.setBackground(Color.WHITE);
+        saveButton.setBackground(new Color(232,76,143));
         saveButton.addActionListener(e -> {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("receipt.txt"))) {
                 writer.write("RECEIPTIFY (>_<)\n");
