@@ -68,7 +68,7 @@ public class OrderingFormPopup {
         calculateButton = new JButton("HIT ME TO ADD UP!");
         proceedButton = new JButton("PROCEED (>O<)");
 
-        // Set font sizes for buttons and dropdowns (matching your original layout)
+        // Set font sizes for buttons and dropdowns
         Font dropdownFont = new Font("Arial", Font.PLAIN, 18); // Font for dropdowns
         productComboBox.setFont(dropdownFont);
         sizeComboBox.setFont(dropdownFont);
@@ -184,15 +184,24 @@ public class OrderingFormPopup {
         String selectedProduct = (String) productComboBox.getSelectedItem();
         if (selectedProduct == null) {
             productImage.setText("Your Image Here");
+            productImage.setIcon(null); // Clear existing image
             return;
         }
 
         // Update image placeholder based on the selected product
-        switch (selectedProduct) {
-            case "POU" -> productImage.setText("Image: Pou");
-            case "CAPYBARA" -> productImage.setText("Image: Capybara");
-            case "TORO" -> productImage.setText("Image: Toro");
-            case "MIFFY" -> productImage.setText("Image: Miffy");
+        String imagePath = switch (selectedProduct) {
+            case "POU" -> "/images/pou.png";
+            case "CAPYBARA" -> "/images/capybara.png";
+            case "TORO" -> "/images/toro.png";
+            case "MIFFY" -> "/images/miffy.png";
+            default -> null;
+        };
+
+        if (imagePath != null) {
+            productImage.setIcon(new ImageIcon(getClass().getResource(imagePath)));
+        } else {
+            productImage.setText("Image Not Found");
+            productImage.setIcon(null); // Clear the icon
         }
     }
 
