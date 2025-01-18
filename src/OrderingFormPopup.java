@@ -83,8 +83,8 @@ public class OrderingFormPopup {
         productComboBox.setBackground(Color.PINK);
         sizeComboBox.setBackground(Color.PINK);
         quantityDropdown.setBackground(Color.PINK);
-        calculateButton.setBackground(Color.PINK);
-        proceedButton.setBackground(Color.PINK);
+        calculateButton.setBackground(new Color(232,76,143));
+        proceedButton.setBackground(new Color(232,76,143));
 
         // Labels
         Font largeFont = new Font("Arial", Font.BOLD, 20); // Larger font for labels
@@ -156,9 +156,17 @@ public class OrderingFormPopup {
         frame.setVisible(true);
     }
 
+
     private void addActionListeners(JFrame frame) {
         // Product image updates on combo box selection
         productComboBox.addActionListener(e -> updateProductImage());
+
+        //custom color for option pane
+        UIManager.put("OptionPane.background", new Color(255, 182, 193));
+        UIManager.put("Panel.background", new Color(255, 182, 193));
+        UIManager.put("OptionPane.messageForeground", Color.BLACK);
+        UIManager.put("Button.background", new Color(232,76,143));
+        UIManager.put("Button.foreground", Color.WHITE);
 
         calculateButton.addActionListener(e -> {
             if (!isValidSelection()) {
@@ -179,6 +187,7 @@ public class OrderingFormPopup {
             totalPriceLabel.setText(String.format("RM%.2f", totalPrice));
             quantityField.setText(String.valueOf(totalQuantity));
         });
+
 
         proceedButton.addActionListener(e -> {
             if (orderedItems.isEmpty()) {
