@@ -2,8 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 
 public class OrderingFormPopup {
     private int orderID; // Store order ID
@@ -35,7 +38,7 @@ public class OrderingFormPopup {
         // Main Panels (white background for the main frame)
         JPanel leftPanel = new JPanel();
         leftPanel.setBackground(Color.WHITE); // Set background to white
-        JPanel rightPanel = new JPanel();
+        JPanel rightPanel = new JPanel(new BorderLayout());
         rightPanel.setBackground(Color.WHITE); // Right panel with white background
 
         leftPanel.setPreferredSize(new Dimension(frame.getWidth() / 2, frame.getHeight()));
@@ -126,7 +129,6 @@ public class OrderingFormPopup {
         leftPanel.add(bottomPanel, BorderLayout.SOUTH);
 
         // Right Panel for Product Image
-        rightPanel.setLayout(new BorderLayout());
         productImage = new JLabel("", JLabel.CENTER);
         productImage.setFont(new Font("Arial", Font.ITALIC, 16));
         productImage.setForeground(Color.DARK_GRAY);
@@ -134,15 +136,11 @@ public class OrderingFormPopup {
         productImage.setBackground(Color.WHITE);
         productImage.setOpaque(true);
 
-        // Load "pricing.png" as default image
-        ImageIcon defaultImageIcon = new ImageIcon(getClass().getResource("/images/pricing.png"));
-        if (defaultImageIcon != null) {
-            productImage.setIcon(new ImageIcon(defaultImageIcon.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH)));
-        } else {
-            productImage.setText("Image Not Found: pricing.png");
-        }
-
+        // Add productImage to the right panel
         rightPanel.add(productImage, BorderLayout.CENTER);
+
+        // Load default image (pricing.png)
+        setProductImage("/images/pricing.png", rightPanel);
 
         // Add Action Listeners
         addActionListeners(frame);
@@ -178,7 +176,7 @@ public class OrderingFormPopup {
 
         proceedButton.addActionListener(e -> {
             if (orderedItems.isEmpty()) {
-                JOptionPane.showMessageDialog(frame, "Your cart is empty! Add your plushies before proceeding.", "Cart Empty", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "Your cart is empty! Add items before proceeding.", "Cart Empty", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
@@ -191,26 +189,39 @@ public class OrderingFormPopup {
 
     private void updateProductImage() {
         String selectedProduct = (String) productComboBox.getSelectedItem();
-        if (selectedProduct == null) {
-            productImage.setText("Your Image Here");
-            productImage.setIcon(null); // Clear existing image
-            return;
-        }
-
-        // Update image placeholder based on the selected product
         String imagePath = switch (selectedProduct) {
             case "POU" -> "/images/pou.png";
             case "CAPYBARA" -> "/images/capybara.png";
             case "TORO" -> "/images/toro.png";
             case "MIFFY" -> "/images/miffy.png";
-            default -> null;
+            default -> "/images/pricing.png"; // Default to pricing.png
         };
 
-        if (imagePath != null) {
-            productImage.setIcon(new ImageIcon(getClass().getResource(imagePath)));
-        } else {
-            productImage.setText("Image Not Found");
-            productImage.setIcon(null); // Clear the icon
+        setProductImage(imagePath, productImage.getParent());
+    }
+
+    private void setProductImage(String imagePath, Container container) {
+        try {
+            BufferedImage img = ImageIO.read(getClass().getResource(imagePath));
+            if (img == null) throw new IOException("Image not found: " + imagePath);
+
+            int containerWidth = container.getWidth();
+            int containerHeight = container.getHeight();
+
+            // Adjust container size if dimensions are invalid
+            if (containerWidth <= 0 || containerHeight <= 0) {
+                containerWidth = 500; // Larger default width
+                containerHeight = 600; // Larger default height
+            }
+
+            // Scale image to fit while maximizing size
+            Image scaledImg = img.getScaledInstance(containerWidth, containerHeight, Image.SCALE_SMOOTH);
+            productImage.setIcon(new ImageIcon(scaledImg));
+            productImage.setText(""); // Clear placeholder text
+        } catch (IOException e) {
+            productImage.setText("Image Not Found: " + imagePath);
+            productImage.setIcon(null);
+            e.printStackTrace();
         }
     }
 
