@@ -1,12 +1,12 @@
-RECEIPTIFY
-ORDER AT 12:14 pm
+RECEIPTIFY (>_<)
+ORDER AT 07:52 pm
 Friday, January 17, 2025
 
 QTY        ITEM       SIZE       AMT       
-2          POU        MEDIUM GUY 17.00     
-4          MIFFY      BIG GUY    25.00     
+5          CAPYBARA   MEDIUM GUY 19.00     
+5          POU        BIG GUY    22.00     
 
-ITEM COUNT: 6
-TOTAL: RM150.00
+ITEM COUNT: 10
+TOTAL: RM220.00
 THANK YOU FOR VISITING!
 receiptify.plushshop.com
