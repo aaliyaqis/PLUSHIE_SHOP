@@ -127,12 +127,21 @@ public class OrderingFormPopup {
 
         // Right Panel for Product Image
         rightPanel.setLayout(new BorderLayout());
-        productImage = new JLabel("Your Image Here: pricing.png", JLabel.CENTER);
+        productImage = new JLabel("", JLabel.CENTER);
         productImage.setFont(new Font("Arial", Font.ITALIC, 16));
         productImage.setForeground(Color.DARK_GRAY);
         productImage.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         productImage.setBackground(Color.WHITE);
         productImage.setOpaque(true);
+
+        // Load "pricing.png" as default image
+        ImageIcon defaultImageIcon = new ImageIcon(getClass().getResource("/images/pricing.png"));
+        if (defaultImageIcon != null) {
+            productImage.setIcon(new ImageIcon(defaultImageIcon.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH)));
+        } else {
+            productImage.setText("Image Not Found: pricing.png");
+        }
+
         rightPanel.add(productImage, BorderLayout.CENTER);
 
         // Add Action Listeners
@@ -230,3 +239,4 @@ public class OrderingFormPopup {
         return sizePrice + productAddOn;
     }
 }
+
