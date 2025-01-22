@@ -88,7 +88,7 @@ public class Main extends JFrame {
             }
         });
 
-        // Add the button to the button panel
+        // Adding the button to the button panels
         buttonPanel.add(menuButton);
         // Add the button panel to the left panel
         leftPanel.add(buttonPanel);
